@@ -50,6 +50,7 @@ func NewEntry(coll string, client *firestore.Client) {
 	*/
 
 func Read(c *firestore.Client, ctx context.Context) string {
+	result := ""
 	iter := c.Collection("users").Documents(ctx)
 	for {
 		doc, err := iter.Next()
@@ -58,8 +59,7 @@ func Read(c *firestore.Client, ctx context.Context) string {
 			// Don't think the above is necessary. When it reaches the end iter.Stop is already been called, maybe maybe not we will see
 			break
 
-		}
-		if err != nil {
+		} else if err != nil {
 			log.Fatal("Failed to iterate: %v", err)
 		}
 		//return doc.Data()
@@ -68,11 +68,11 @@ func Read(c *firestore.Client, ctx context.Context) string {
 			fmt.Println("k:", k, "v:", v)	
 		}
 		fmt.Println(x["first"])
-		fmt.Fprintf(os.Stdout,"Data: %v\n", doc.Data())
+		result += fmt.Sprintf("Data: %v\n", doc.Data())
 
 		fmt.Fprintf(os.Stdout, "Type %v\n", reflect.TypeOf(doc.Data()).String())
 			
 	}
-	return ""
+	return result
 }
 
