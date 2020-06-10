@@ -1,0 +1,20 @@
+{{template "base"}}
+{{define "body"}}
+<form action='/create' method='POST'>
+	<div>
+		<label>First</label>
+		<input type='text' name='first'>
+	</div>
+	<div>
+		<label>Last</label>
+		<input type='text' name='last'>
+	</div>
+	<div>
+		<label>Year</label>
+		<input type='number' name='year'>
+	</div>
+	<div>
+		<input type='submit' value='Publish'>
+	</div>
+</form>
+{{end}}

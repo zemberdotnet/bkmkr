@@ -1,0 +1,17 @@
+{{template "base" .}}
+{{define "body"}}
+<h1> The selected element</h1>
+<div id="form">
+<label for="users">Choose a user:</label>
+<select id="users" name="selection" form="use">
+{{range .}}
+<option value="{{.ID}}">{{.First}} {{.Last}}</option>
+{{end}}
+</select>
+<form id="use" action='/delete' method='POST'>
+	<div>
+		<input type='submit' value='Submit'>
+	</div>
+</form>
+</div>
+{{end}}
