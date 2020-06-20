@@ -1,0 +1,19 @@
+{{template "base" .}}
+{{define "body"}}
+<div id="recent">
+<table>
+<tr>
+	<th>First</th>
+	<th>Last</th>
+	<th>Born</th>
+</tr>
+{{range $_, $item := .People}}
+<tr>
+<td>{{$item.first}}</td>
+<td>{{$item.last}}</td>
+<td>{{$item.born}}</td>
+</tr>
+{{end}}
+</table>
+</div>
+{{end}}

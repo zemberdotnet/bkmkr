@@ -3,10 +3,13 @@ package main
 import (
 	"html/template"
 	"path/filepath"
+	//	"zember.net/bkmrk/pkg/models"
 )
 
 type templateData struct {
-	Entry string
+	//	People []*models.Person
+	Forms  *Forms
+	People *[]map[string]interface{}
 }
 
 func newTemplateCache(dir string) (temp map[string]*template.Template, e error) {

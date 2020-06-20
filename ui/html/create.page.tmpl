@@ -3,18 +3,18 @@
 <form action='/create' method='POST'>
 	<div>
 		<label>First</label>
-		<input type='text' name='first'>
+		<input type='text' name='first' required>
 	</div>
 	<div>
 		<label>Last</label>
-		<input type='text' name='last'>
+		<input type='text' name='last' required>
 	</div>
 	<div>
 		<label>Year</label>
-		<input type='number' name='year'>
+		<input type='number' name='year' required>
 	</div>
 	<div>
-		<input type='submit' value='Publish'>
+		<input type='submit' value='Publish' required>
 	</div>
 </form>
 {{end}}

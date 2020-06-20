@@ -1,13 +1,15 @@
 package main
 
 import (
-	"cloud.google.com/go/firestore"
 	"context"
 	"flag"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
+
+	"cloud.google.com/go/firestore"
+	"google.golang.org/api/option"
 )
 
 type application struct {
@@ -17,6 +19,8 @@ type application struct {
 	templateCache map[string]*template.Template
 }
 
+// Working towards renaming client in application struct or just creating a
+// new pattern
 func main() {
 	addr := flag.String("addr", ":4000", "HTTP network address")
 	flag.Parse()
@@ -25,9 +29,11 @@ func main() {
 	errorLog := log.New(os.Stderr, "ERR:\t ", log.Ldate|log.Ltime|log.Lshortfile)
 
 	ctx := context.Background()
-	client, err := connectInit(ctx)
-	defer connectClose(client)
-
+	creds := "/home/user1/Downloads/MyFirstProject.json"
+	c, err := firestore.NewClient(ctx, firestore.DetectProjectID, option.WithCredentialsFile(creds))
+	if err != nil {
+		errorLog.Fatalf("New Client: %v", err)
+	}
 	ts, err := newTemplateCache("./ui/html")
 	if err != nil {
 		errorLog.Fatal(err)
@@ -36,7 +42,7 @@ func main() {
 	app := application{
 		infoLog:       infoLog,
 		errorLog:      errorLog,
-		db:            client,
+		db:            c,
 		templateCache: ts,
 	}
 
@@ -82,6 +88,14 @@ func main() {
 	//	jsonString, _ := json.Marshal(x)
 	//	fmt.Println(string(jsonString))
 
+	/*
+			This is Set.
+		testData := make(map[string]interface{})
+		testData["Born"] = 1998
+		coll := client.Collection("users")
+		docref := coll.Doc("0001")
+		_, err = docref.Set(ctx, testData)
+	*/
 	err = srv.ListenAndServe()
 
 	log.Fatal(err)
